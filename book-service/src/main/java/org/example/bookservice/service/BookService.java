@@ -40,7 +40,6 @@ public class BookService {
 
     @Transactional
     public BookDTO addBook(BookDTO bookDTO) {
-
         if (bookRepository.findByIsbn(bookDTO.getIsbn()).isPresent()) {
             throw new BookWithIsbnExistException("Book with this ISBN already exists");
         }
