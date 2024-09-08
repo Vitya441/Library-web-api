@@ -1,0 +1,57 @@
+version: '3.1'
+
+volumes:
+  pg_data:
+  pg_data_2:
+
+
+services:
+  library_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vitya
+      POSTGRES_PASSWORD: 22817
+      POSTGRES_DB: library_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  book-service:
+    build: ./book-service  # (book service)
+    restart: always
+    depends_on:
+      - library_db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db:5432/library_db
+      SPRING_DATASOURCE_USERNAME: vitya
+      SPRING_DATASOURCE_PASSWORD: 22817
+      SERVER_PORT: 8080
+
+  library_db_2:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vitya
+      POSTGRES_PASSWORD: 22817
+      POSTGRES_DB: library_db_2
+    volumes:
+      - pg_data_2:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  library-service:
+    build: ./library-service  # путь к Dockerfile вашего library-service
+    restart: always
+    depends_on:
+      - library_db_2
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db_2:5432/library_db_2
+      SPRING_DATASOURCE_USERNAME: vitya
+      SPRING_DATASOURCE_PASSWORD: 22817
+      SERVER_PORT: 8081

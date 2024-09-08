@@ -1,0 +1,42 @@
+##version: '3.1'
+#
+#volumes:
+#  pg_data_2:
+#
+#networks:
+#  my-shared-network:
+#    external: true
+#
+#
+#
+#services:
+#  library_db_2:
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_USER: vitya
+#      POSTGRES_PASSWORD: 22817
+#      POSTGRES_DB: library_db_2
+#    volumes:
+#      - pg_data_2:/var/lib/postgresql/data
+#    ports:
+#      - "5434:5432"
+#    networks:
+#      - my-shared-network
+#
+#
+#  library-service:
+#    restart: always
+#    build: .
+#    depends_on:
+#      - library_db_2
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - my-shared-network
+#    environment:
+#      #      Используем порт 5432 которйы внутри докер контейнера, о хосте знать не нужно
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db_2:5432/library_db_2
+#      SPRING_DATASOURCE_USERNAME: vitya
+#      SPRING_DATASOURCE_PASSWORD: 22817
+#      SERVER_PORT: 8081
