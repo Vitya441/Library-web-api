@@ -15,3 +15,6 @@
 Все тоже самое, кроме последнего пункта:  
 `docker-compose up` - запуск 
 
+## Документация Swagger
+`http://localhost:8080/swagger-ui/index.html` - Документация для сервиса book-service
+`http://localhost:8081/swagger-ui/index.html` - Документация для сервиса library-service
