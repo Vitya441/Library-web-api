@@ -15,6 +15,4 @@ public class RecordDTO {
 
     private LocalDateTime returnBy;
 
-
-
 }

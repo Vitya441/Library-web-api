@@ -16,7 +16,6 @@ public class LibraryController {
 
     private final LibraryService libraryService;
 
-
     @Operation(summary = "Регистрация книги в библиотеке", description = "Данный эндпоинт вызывается сервисом BookService при создании новой книги")
     @PostMapping("/register")
     public ResponseEntity<Void> registerNewBook(@RequestParam Long bookId) {
@@ -37,13 +36,5 @@ public class LibraryController {
         return ResponseEntity.ok().body(updatedRecord);
 
     }
-
-
-
-
-
-
-
-
 
 }

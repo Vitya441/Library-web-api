@@ -36,8 +36,6 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private Role role;
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -47,11 +45,6 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
-//    @Override
-//    public String getUsername() {
-//        return email;
-//    }
 
     @Override
     public boolean isAccountNonExpired() {

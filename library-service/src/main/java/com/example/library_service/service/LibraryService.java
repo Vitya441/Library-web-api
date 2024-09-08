@@ -17,18 +17,15 @@ public class LibraryService {
     private final LibraryRepository libraryRepository;
     private final RecordMapper recordMapper;
 
-
     public void registerNewBook(Long bookId) {
         Record record = new Record();
         record.setBookId(bookId);
         libraryRepository.save(record);
     }
 
-
     public List<RecordDTO> getAvailableBooks() {
         return recordMapper.toRecordDTOList(libraryRepository.findAllByReturnByIsNull());
     }
-
 
     public RecordDTO updateRecord(Long id, RecordDTO newRecord) {
         Record record = libraryRepository.findById(id)
