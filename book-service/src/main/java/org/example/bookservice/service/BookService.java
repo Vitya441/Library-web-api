@@ -21,7 +21,6 @@ public class BookService {
     private final BookMapper bookMapper;
     private final LibraryServiceClient libraryServiceClient;
 
-
     public BookDTO getBookById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book with id = " + id + " not found"));
@@ -46,13 +45,11 @@ public class BookService {
             throw new BookWithIsbnExistException("Book with this ISBN already exists");
         }
         Book book = bookMapper.toBookEntity(bookDTO);
+        book.setId(null);
         Book savedBook = bookRepository.save(book);
-        // Используем Feign Client для регистрации книги в LibraryService
         libraryServiceClient.registerBook(savedBook.getId());
         return bookMapper.toBookDTO(savedBook);
     }
-
-
 
     public BookDTO updateBook(Long id, BookDTO bookDTO) {
         Book existingBook = bookRepository.findById(id)
@@ -78,6 +75,5 @@ public class BookService {
         }
         bookRepository.deleteById(id);
     }
-
 
 }

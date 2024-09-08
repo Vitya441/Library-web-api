@@ -21,7 +21,6 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
     public JwtAuthResponse signUp(@RequestBody @Valid SignUpRequest request) {
@@ -33,7 +32,4 @@ public class AuthController {
     public JwtAuthResponse signIn(@RequestBody @Valid SignInRequest request) {
         return authenticationService.signIn(request);
     }
-
-
-
 }

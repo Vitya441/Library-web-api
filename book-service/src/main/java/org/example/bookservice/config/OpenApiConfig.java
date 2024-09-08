@@ -14,7 +14,4 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
         scheme = "bearer"
 )
 public class OpenApiConfig {
-
-
-
 }

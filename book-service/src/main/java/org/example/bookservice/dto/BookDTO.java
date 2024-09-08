@@ -17,5 +17,4 @@ public class BookDTO {
 
     private String author;
 
-
 }
