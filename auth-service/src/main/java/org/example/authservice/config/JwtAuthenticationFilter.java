@@ -1,4 +1,4 @@
-package org.example.bookservice.config;
+package org.example.authservice.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.example.bookservice.service.JwtService;
-import org.example.bookservice.service.UserService;
+import org.example.authservice.service.JwtService;
+import org.example.authservice.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String HEADER_NAME = "Authorization";
     private final JwtService jwtService;
     private final UserService userService;
+
 
     @Override
     protected void doFilterInternal(
@@ -64,8 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.setContext(context);
             }
         }
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
     }
-
 
 }

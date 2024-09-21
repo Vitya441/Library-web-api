@@ -1,6 +1,7 @@
 volumes:
   pg_data:
   pg_data_2:
+  pg_data_3:
 
 
 services:
@@ -53,3 +54,28 @@ services:
       SPRING_DATASOURCE_USERNAME: vitya
       SPRING_DATASOURCE_PASSWORD: 22817
       SERVER_PORT: 8081
+
+  user_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vitya
+      POSTGRES_PASSWORD: 22817
+      POSTGRES_DB: user_db
+    volumes:
+      - pg_data_3:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+
+#  auth-service:
+#    build: ./auth-service
+#    restart: always
+#    depends_on:
+#      - user_db
+#    ports:
+#      - "8082:8082"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://user_db:5432/user_db
+#      SPRING_DATASOURCE_USERNAME: vitya
+#      SPRING_DATASOURCE_PASSWORD: 22817
+#      SERVER_PORT: 8082

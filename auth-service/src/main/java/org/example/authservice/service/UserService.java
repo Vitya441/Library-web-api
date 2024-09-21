@@ -1,37 +1,38 @@
-package org.example.bookservice.service;
+package org.example.authservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bookservice.dto.Role;
-import org.example.bookservice.entity.User;
-import org.example.bookservice.repository.UserRepository;
+import org.example.authservice.entity.User;
+import org.example.authservice.exception.UserWithEmailExistException;
+import org.example.authservice.exception.UserWithUsernameExistException;
+import org.example.authservice.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
     private final UserRepository repository;
 
+    @Transactional
     public User save(User user) {
         return repository.save(user);
     }
 
-    public User create(User user) {
+    @Transactional
+    public User create(User user) throws UserWithUsernameExistException {
         if (repository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Пользователь с таким именем уже существует");
+            throw new UserWithUsernameExistException("Пользователь с таким именем уже существует");
         }
         if (repository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Пользователь с таким email уже существует");
+            throw new UserWithEmailExistException("Пользователь с таким email уже существует");
         }
         return save(user);
     }
 
     public User getByUsername(String username) {
-        return repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+        return repository.findByUsername(username);
     }
 
     public UserDetailsService userDetailsService() {
@@ -44,11 +45,7 @@ public class UserService {
         return getByUsername(username);
     }
 
-    @Deprecated
-    public void getAdmin() {
-        User user = getCurrentUser();
-        user.setRole(Role.ROLE_ADMIN);
-        save(user);
-    }
+
+
 
 }
