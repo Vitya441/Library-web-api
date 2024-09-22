@@ -13,7 +13,7 @@ import java.util.List;
 @SecurityRequirement(name = "JWT")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/books") //todo: Так же поменял /api/v1/books на /books
 public class BookController {
 
     private final BookService bookService;

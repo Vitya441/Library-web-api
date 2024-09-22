@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "library-service", url = "http://localhost:8081")
 public interface LibraryServiceClient {
-    @PostMapping("/api/v1/library/register")
+    @PostMapping("/library/register")
     void registerBook(@RequestParam Long bookId);
 }

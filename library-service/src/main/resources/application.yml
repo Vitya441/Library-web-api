@@ -1,0 +1,37 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: LIBRARY-SERVICE
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/library_db_2
+    username: vitya
+    password: 22817
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+
+
+#spring.application.name=library-service
+#
+#server.port=8081
+#
+#spring.datasource.url=jdbc:postgresql://localhost:5434/library_db_2
+#spring.datasource.username=vitya
+#spring.datasource.password=22817
+#
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true
+#spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+#

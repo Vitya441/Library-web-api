@@ -11,16 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionApiHandler {
 
-    @ExceptionHandler(UserWithUsernameExistException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameExistException(UserWithUsernameExistException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
-
-    @ExceptionHandler(UserWithEmailExistException.class)
-    public ResponseEntity<ErrorResponse> handleEmailExistException(UserWithEmailExistException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    @ExceptionHandler(InvalidAccessException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidAccessException(InvalidAccessException e) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AuthenticationException.class)
@@ -28,6 +22,20 @@ public class ExceptionApiHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Неверные учетные данные");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
+
+
+//    @ExceptionHandler(UserWithUsernameExistException.class)
+//    public ResponseEntity<ErrorResponse> handleUsernameExistException(UserWithUsernameExistException ex) {
+//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+//    }
+//
+//    @ExceptionHandler(UserWithEmailExistException.class)
+//    public ResponseEntity<ErrorResponse> handleEmailExistException(UserWithEmailExistException ex) {
+//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+//    }
+
 
 //    @ExceptionHandler(AccessDeniedException.class)
 //    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {

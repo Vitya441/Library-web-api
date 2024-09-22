@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/library")
+@RequestMapping("/library") //todo: Изменил на /api/v1/library на /library
 public class LibraryController {
 
     private final LibraryService libraryService;

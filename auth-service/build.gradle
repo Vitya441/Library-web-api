@@ -11,15 +11,26 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2023.0.3")
+}
+
+
 dependencies {
 	// Spring
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	// Логирование
-//	implementation 'org.springframework.boot:spring-boot-starter-logging:3.3.3'
+	//todo: Изменил версию 0.12.x на 0.11.5
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	// JWT implementation
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	// JWT jackson
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 
 	// Lombok
@@ -35,28 +46,17 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	// SrpingDoc starter
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-	// JWT
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-	// JWT implementation
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-	// JWT jackson
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//java {
-//	toolchain {
-//		languageVersion = JavaLanguageVersion.of(21)
-//	}
-//}
-
-//configurations {
-//	compileOnly {
-//		extendsFrom annotationProcessor
-//	}
-//}

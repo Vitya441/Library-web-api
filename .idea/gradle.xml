@@ -4,6 +4,14 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-gateway" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-gateway" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/auth-service" />
         <option name="gradleJvm" value="21" />
         <option name="modules">
@@ -18,6 +26,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/book-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/eureka-registry" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/eureka-registry" />
           </set>
         </option>
       </GradleProjectSettings>
