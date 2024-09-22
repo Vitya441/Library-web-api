@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
+//    @ExceptionHandler(TokenIsNotValidException.class)
+//    public ResponseEntity<ErrorResponse> handleTokenIsNotValidException(Exception ex) {
+//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+//    }
+
 //    @ExceptionHandler(AuthenticationException.class)
 //    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
 //        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
