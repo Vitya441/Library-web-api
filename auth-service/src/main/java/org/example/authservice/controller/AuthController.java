@@ -3,12 +3,11 @@ package org.example.authservice.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.authservice.dto.AuthRequest;
+import org.example.authservice.dto.AuthResponse;
 import org.example.authservice.entity.UserCredential;
-import org.example.authservice.exception.InvalidAccessException;
 import org.example.authservice.service.AuthService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,28 +18,22 @@ public class AuthController {
 
     private final AuthService authService;
 
-    private final AuthenticationManager authenticationManager;
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public String addNewUser(@RequestBody UserCredential user) {
-        return authService.saveUser(user);
+    public void addNewUser(@RequestBody UserCredential user) {
+        authService.saveUser(user);
     }
 
-    @PostMapping("/token")
-    public String getToken(@RequestBody AuthRequest authRequest) {
-
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authenticate.isAuthenticated()) {
-            return authService.generateToken(authRequest.getUsername());
-        } else {
-            throw new InvalidAccessException("Invalid access, how are you?");
-        }
+    //TODO: Бросаю общее исключение?
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> getToken(@RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(authService.login(authRequest));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @GetMapping("/validate")
-    public String validateToken(@RequestParam("token") String token) {
+    public void validateToken(@RequestParam("token") String token) {
         authService.validateToken(token);
-        return "Token is valid";
     }
 
 }

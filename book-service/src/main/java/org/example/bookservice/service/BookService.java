@@ -2,7 +2,8 @@ package org.example.bookservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bookservice.cloud.LibraryServiceClient;
-import org.example.bookservice.dto.BookDTO;
+import org.example.bookservice.dto.BookRequestDTO;
+import org.example.bookservice.dto.BookResponseDTO;
 import org.example.bookservice.entity.Book;
 import org.example.bookservice.exception.BookNotFoundException;
 import org.example.bookservice.exception.BookWithIsbnExistException;
@@ -21,56 +22,49 @@ public class BookService {
     private final BookMapper bookMapper;
     private final LibraryServiceClient libraryServiceClient;
 
-    public BookDTO getBookById(Long id) {
+    public BookResponseDTO getBookById(Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book with id = " + id + " not found"));
-        return bookMapper.toBookDTO(book);
+                .orElseThrow(() -> new BookNotFoundException("Книга с id = " + id + " не найдена"));
+        return bookMapper.toBookResponseDTO(book);
     }
 
-    public List<BookDTO> getAllBooks() {
+    public List<BookResponseDTO> getAllBooks() {
         List<Book> bookEntities = bookRepository.findAll();
-        return bookMapper.toBookDTOs(bookEntities);
+        return bookMapper.toBookResponseDTOs(bookEntities);
     }
 
-    public BookDTO getBookByIsbn(String isbn) {
+    public BookResponseDTO getBookByIsbn(String isbn) {
         Book book = bookRepository.findByIsbn(isbn)
-                .orElseThrow(() -> new BookNotFoundException("Book with ISBN = " + isbn + " not found"));
-        return bookMapper.toBookDTO(book);
+                .orElseThrow(() -> new BookNotFoundException("Книга с ISBN = " + isbn + " не найдена"));
+        return bookMapper.toBookResponseDTO(book);
     }
 
     @Transactional
-    public BookDTO addBook(BookDTO bookDTO) {
+    public BookResponseDTO addBook(BookRequestDTO bookDTO) {
         if (bookRepository.findByIsbn(bookDTO.getIsbn()).isPresent()) {
-            throw new BookWithIsbnExistException("Book with this ISBN already exists");
+            throw new BookWithIsbnExistException("Книга с этим ISBN уже существует");
         }
         Book book = bookMapper.toBookEntity(bookDTO);
-        book.setId(null);
         Book savedBook = bookRepository.save(book);
         libraryServiceClient.registerBook(savedBook.getId());
-        return bookMapper.toBookDTO(savedBook);
+        return bookMapper.toBookResponseDTO(savedBook);
     }
 
-    public BookDTO updateBook(Long id, BookDTO bookDTO) {
+    @Transactional
+    public BookResponseDTO updateBook(Long id, BookRequestDTO bookDTO) {
         Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book with id = " + id + " not found"));
-
+                .orElseThrow(() -> new BookNotFoundException("Книга с id = " + id + " не найдена"));
         if (!existingBook.getIsbn().equals(bookDTO.getIsbn()) && bookRepository.existsByIsbn(bookDTO.getIsbn())) {
-            throw new BookWithIsbnExistException("Book with this ISBN already exists");
+            throw new BookWithIsbnExistException("Книга с этим ISBN уже существует");
         }
-
-        existingBook.setIsbn(bookDTO.getIsbn());
-        existingBook.setName(bookDTO.getName());
-        existingBook.setGenre(bookDTO.getGenre());
-        existingBook.setDescription(bookDTO.getDescription());
-        existingBook.setAuthor(bookDTO.getAuthor());
-
+        bookMapper.updateBookFromDTO(bookDTO, existingBook);
         Book savedBook = bookRepository.save(existingBook);
-        return bookMapper.toBookDTO(savedBook);
+        return bookMapper.toBookResponseDTO(savedBook);
     }
 
     public void deleteBook(Long id) {
         if (!bookRepository.existsById(id)) {
-            throw new BookNotFoundException("Book with id = " + id + " not found");
+            throw new BookNotFoundException("Книга с id = " + id + " не найдена");
         }
         bookRepository.deleteById(id);
     }

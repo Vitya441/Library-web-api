@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.example.authservice.exception.InvalidTokenException;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -18,7 +19,11 @@ public class JwtService {
 
 
     public void validateToken(final String token) {
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+        try {
+            Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+        } catch (Exception ex) {
+            throw new InvalidTokenException("Неверный токен");
+        }
     }
 
 

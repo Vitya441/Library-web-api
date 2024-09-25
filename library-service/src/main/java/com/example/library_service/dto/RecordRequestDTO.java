@@ -5,11 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class RecordDTO {
-
-    private Long id;
-
-    private Long bookId;
+public class RecordRequestDTO {
 
     private LocalDateTime borrowedAt;
 

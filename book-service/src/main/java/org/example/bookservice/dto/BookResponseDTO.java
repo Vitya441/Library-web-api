@@ -3,7 +3,7 @@ package org.example.bookservice.dto;
 import lombok.Data;
 
 @Data
-public class BookDTO {
+public class BookResponseDTO {
 
     private Long id;
 
@@ -16,5 +16,4 @@ public class BookDTO {
     private String description;
 
     private String author;
-
 }

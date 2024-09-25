@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface LibraryRepository extends JpaRepository<Record, Long> {
 
-    List<Record> findAllByReturnByIsNull();
+    List<Record> findAllByBorrowedAtIsNullAndAndReturnByIsNull();
+
 }

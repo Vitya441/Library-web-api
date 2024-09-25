@@ -20,20 +20,22 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+openapi:
+  service:
+    title: book-service doc
+    version: 1.0.0
+    url: http://localhost:8000
 
 
+springdoc:
+  api-docs:
+    path: /book-service/v3/api-docs
+  swagger-ui:
+    path: /book-service/swagger-ui.html
 
-#spring.application.name=book-service
-#
-#server.port=8080
-#
-#spring.datasource.url=jdbc:postgresql://localhost:5433/library_db
-#spring.datasource.username=vitya
-#spring.datasource.password=22817
-#
-#spring.jpa.hibernate.ddl-auto=update
-#spring.jpa.show-sql=true
-#spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-#
-#token.signing.key=53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
+#springdoc:
+#  api-docs:
+#    path: /v3/api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
 #

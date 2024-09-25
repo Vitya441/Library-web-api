@@ -1,8 +1,6 @@
-package org.example.bookservice.config;
+package org.example.authservice.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
@@ -14,12 +12,6 @@ import java.util.List;
 
 @OpenAPIDefinition
 @Configuration
-@SecurityScheme(
-        name = "JWT",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
 public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI(
