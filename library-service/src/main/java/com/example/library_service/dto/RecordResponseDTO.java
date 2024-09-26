@@ -14,5 +14,4 @@ public class RecordResponseDTO {
     private LocalDateTime borrowedAt;
 
     private LocalDateTime returnBy;
-
 }

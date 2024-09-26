@@ -24,7 +24,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	//todo: Изменил версию 0.12.x на 0.11.5
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	// JWT implementation
@@ -49,8 +48,6 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	// SrpingDoc starter
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-
-
 
 }
 

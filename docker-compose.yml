@@ -1,10 +1,37 @@
 volumes:
-  pg_data:
-  pg_data_2:
-  pg_data_3:
+  pg_data_book:
+  pg_data_library:
+  pg_data_user:
 
 
 services:
+  book_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vitya
+      POSTGRES_PASSWORD: 22817
+      POSTGRES_DB: book_db
+    volumes:
+      - pg_data_book:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  book-service:
+    build: ./book-service
+    restart: always
+    depends_on:
+      - book_db
+      - eureka-registry
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://book_db:5432/book_db
+      SPRING_DATASOURCE_USERNAME: vitya
+      SPRING_DATASOURCE_PASSWORD: 22817
+      SERVER_PORT: 8080
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-registry:8761/eureka/
+
   library_db:
     image: postgres
     restart: always
@@ -13,34 +40,7 @@ services:
       POSTGRES_PASSWORD: 22817
       POSTGRES_DB: library_db
     volumes:
-      - pg_data:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
-
-  book-service:
-    build: ./book-service
-    restart: always
-    depends_on:
-      - library_db
-      - eureka-registry
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db:5432/library_db
-      SPRING_DATASOURCE_USERNAME: vitya
-      SPRING_DATASOURCE_PASSWORD: 22817
-      SERVER_PORT: 8080
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-registry:8761/eureka/
-
-  library_db_2:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: vitya
-      POSTGRES_PASSWORD: 22817
-      POSTGRES_DB: library_db_2
-    volumes:
-      - pg_data_2:/var/lib/postgresql/data
+      - pg_data_library:/var/lib/postgresql/data
     ports:
       - "5434:5432"
 
@@ -48,12 +48,12 @@ services:
     build: ./library-service
     restart: always
     depends_on:
-      - library_db_2
+      - library_db
       - eureka-registry
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db_2:5432/library_db_2
+      SPRING_DATASOURCE_URL: jdbc:postgresql://library_db:5432/library_db
       SPRING_DATASOURCE_USERNAME: vitya
       SPRING_DATASOURCE_PASSWORD: 22817
       SERVER_PORT: 8081
@@ -68,7 +68,7 @@ services:
       POSTGRES_PASSWORD: 22817
       POSTGRES_DB: user_db
     volumes:
-      - pg_data_3:/var/lib/postgresql/data
+      - pg_data_user:/var/lib/postgresql/data
     ports:
       - "5435:5432"
 

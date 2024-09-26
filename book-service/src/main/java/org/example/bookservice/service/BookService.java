@@ -62,6 +62,7 @@ public class BookService {
         return bookMapper.toBookResponseDTO(savedBook);
     }
 
+    @Transactional
     public void deleteBook(Long id) {
         if (!bookRepository.existsById(id)) {
             throw new BookNotFoundException("Книга с id = " + id + " не найдена");

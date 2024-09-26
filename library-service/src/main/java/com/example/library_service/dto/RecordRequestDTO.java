@@ -10,5 +10,4 @@ public class RecordRequestDTO {
     private LocalDateTime borrowedAt;
 
     private LocalDateTime returnBy;
-
 }

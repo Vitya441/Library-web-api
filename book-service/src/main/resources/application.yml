@@ -6,7 +6,7 @@ spring:
     name: BOOK-SERVICE
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/library_db
+    url: jdbc:postgresql://localhost:5433/book_db
     username: vitya
     password: 22817
   jpa:

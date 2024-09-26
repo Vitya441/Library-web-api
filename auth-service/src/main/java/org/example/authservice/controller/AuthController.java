@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.authservice.dto.AuthRequest;
 import org.example.authservice.dto.AuthResponse;
-import org.example.authservice.entity.UserCredential;
+import org.example.authservice.dto.RegisterRequest;
 import org.example.authservice.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public void addNewUser(@RequestBody UserCredential user) {
+    public void addNewUser(@RequestBody RegisterRequest user) {
         authService.saveUser(user);
     }
 

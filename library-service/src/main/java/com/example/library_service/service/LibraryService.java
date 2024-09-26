@@ -43,10 +43,6 @@ public class LibraryService {
         Record updatedRecord = libraryRepository.save(record);
         return recordMapper.toRecordDto(updatedRecord);
     }
-
-
-
-
 }
 
 
