@@ -1,7 +1,7 @@
 # Library-API
 
 ## Требования перед запуском
-1) Убедиться что порты компьютера 8080, 8081, 5433, 5434 не заняты
+1) Убедиться что порты компьютера 8000, 8080, 8081, 8082, 8761, 5433, 5434, 5435 не заняты
 2) Установленный Docker и Docker compose
 
 ## Инструкция по запуску
@@ -16,6 +16,4 @@
 `docker-compose up` - запуск 
 
 ## Документация Swagger
-`http://localhost:8080/swagger-ui/index.html` - Документация для сервиса book-service
-
-`http://localhost:8081/swagger-ui/index.html` - Документация для сервиса library-service
+`http://localhost:8000/swagger-ui.html` - Единая документация для всех сервисов
